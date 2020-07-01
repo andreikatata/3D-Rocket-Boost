@@ -134,6 +134,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2047351873, guid: dcbef1a0a69e55344a11efb094274b86, type: 3}
+      propertyPath: m_Drag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2047351873, guid: dcbef1a0a69e55344a11efb094274b86, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2047351874, guid: dcbef1a0a69e55344a11efb094274b86, type: 3}
+      propertyPath: mainEngine
+      value: 
+      objectReference: {fileID: 8300000, guid: 779865a06b063b040b7e232257f8ee69, type: 3}
+    - target: {fileID: 2047351874, guid: dcbef1a0a69e55344a11efb094274b86, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4e0b4ba9cba073e4b98d30a423ba00af, type: 3}
+    - target: {fileID: 2047351874, guid: dcbef1a0a69e55344a11efb094274b86, type: 3}
+      propertyPath: mainThrust
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2047351874, guid: dcbef1a0a69e55344a11efb094274b86, type: 3}
+      propertyPath: successfulLanding
+      value: 
+      objectReference: {fileID: 8300000, guid: f85445ee86113c24d8415c394ec3e205, type: 3}
+    - target: {fileID: 2047351874, guid: dcbef1a0a69e55344a11efb094274b86, type: 3}
+      propertyPath: rcsThrust
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6548217548651204899, guid: dcbef1a0a69e55344a11efb094274b86,
         type: 3}
       propertyPath: m_Name
