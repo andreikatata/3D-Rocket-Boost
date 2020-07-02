@@ -5,12 +5,21 @@ public class Rocket : MonoBehaviour
 {
     Rigidbody rigidBody;
     AudioSource audioSource;
+
+    [Header("ThrustValue")]
     [SerializeField] float rcsThrust = 100f; //rcs rocket control system
     [SerializeField] float mainThrust = 10f; //rcs rocket control system
 
+    [Header("SoundFX")]
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip successfulLanding;
+
+    [Header("ParticleFX")]
+    [SerializeField] ParticleSystem mainEngineFX;
+    [SerializeField] ParticleSystem levelCompledFX;
+    [SerializeField] ParticleSystem deathFX;
+
 
     enum State { Alive, Dying, Transcending}
     State state = State.Alive;
@@ -21,6 +30,7 @@ public class Rocket : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+
         
     }
 
@@ -57,12 +67,13 @@ public class Rocket : MonoBehaviour
 
         }
     }
-
+    
     private void StartDeathSequence()
     {
         state = State.Dying;
         audioSource.Stop();
         audioSource.PlayOneShot(deathSound);
+        deathFX.Play();
         Invoke("LoadFirstLevel", 1f);
     }
 
@@ -71,6 +82,7 @@ public class Rocket : MonoBehaviour
         state = State.Transcending;
         audioSource.Stop();
         audioSource.PlayOneShot(successfulLanding);
+        levelCompledFX.Play();
         Invoke("LoadNextLevel", 1f); // parameterise time
     }
 
@@ -109,6 +121,7 @@ public class Rocket : MonoBehaviour
         else
         {
             audioSource.Stop();
+            mainEngineFX.Stop();
         }
     }
 
@@ -118,7 +131,7 @@ public class Rocket : MonoBehaviour
         {
             audioSource.PlayOneShot(mainEngine);
         }
-
+        mainEngineFX.Play();
         rigidBody.AddRelativeForce(Vector3.up * mainThrust);
     }
 }
