@@ -5,6 +5,8 @@ public class Rocket : MonoBehaviour
 {
     Rigidbody rigidBody;
     AudioSource audioSource;
+    [Header("Level Load Delay")]
+    [SerializeField] float levelLoadDelay = 2f;
 
     [Header("ThrustValue")]
     [SerializeField] float rcsThrust = 100f; //rcs rocket control system
@@ -23,6 +25,7 @@ public class Rocket : MonoBehaviour
 
     enum State { Alive, Dying, Transcending}
     State state = State.Alive;
+    bool collisionsAreDisabled = false;
 
 
     // Start is called before the first frame update
@@ -42,13 +45,25 @@ public class Rocket : MonoBehaviour
             RespondToThrust();
             RespondToRotation();
         }
-        
+        RespondToDebugKey();
 
+    }
+
+    private void RespondToDebugKey()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StartSuccessSequence();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionsAreDisabled = !collisionsAreDisabled;
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive)
+        if (state != State.Alive || collisionsAreDisabled)
         {
             return;
         }
@@ -74,7 +89,7 @@ public class Rocket : MonoBehaviour
         audioSource.Stop();
         audioSource.PlayOneShot(deathSound);
         deathFX.Play();
-        Invoke("LoadFirstLevel", 1f);
+        Invoke("LoadFirstLevel", levelLoadDelay);
     }
 
     private void StartSuccessSequence()
@@ -83,7 +98,7 @@ public class Rocket : MonoBehaviour
         audioSource.Stop();
         audioSource.PlayOneShot(successfulLanding);
         levelCompledFX.Play();
-        Invoke("LoadNextLevel", 1f); // parameterise time
+        Invoke("LoadNextLevel", levelLoadDelay); // parameterise time
     }
 
     private void LoadNextLevel()
@@ -132,6 +147,6 @@ public class Rocket : MonoBehaviour
             audioSource.PlayOneShot(mainEngine);
         }
         mainEngineFX.Play();
-        rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
     }
 }
